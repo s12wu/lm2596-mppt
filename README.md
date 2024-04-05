@@ -71,3 +71,4 @@ For my project, I made a nice case with analog meters, and buttons to switch bet
 
 It's pretty messy in there. Thank you for checking out this project, any comments are welcome :)
 
+Inspired by this article by zabex (in German): [http://www.zabex.de/site/mpptracker.html](http://www.zabex.de/site/mpptracker.html)
