@@ -69,6 +69,20 @@ For my project, I made a nice case with analog meters, and buttons to switch bet
 
 ![case back](images/back.jpg)
 
-It's pretty messy in there. Thank you for checking out this project, any comments are welcome :)
+It's pretty messy in there...
 
 Inspired by this article by zabex (in German): [http://www.zabex.de/site/mpptracker.html](http://www.zabex.de/site/mpptracker.html)
+
+## Thoughts after using this device for a year
+ - I didn't add the (e-ink) display. Displaying things like the last day's power history may be a nice gimmick, but it didn't add any value to me in the long run.
+ - I never leave it unattended. The battery and solar panel are disconnected at night and when I'm away during the day. This is because the device itself doesn't have that much capacity (see next point), and I mainly use it as a glorified USB charger. Not that this is a bad thing.
+ - The battery I use as "internal" is an old 6s NiMH RC car battery with not much capacity left. But it works fine for this purpose. To get a desired voltage at the solar panel (16V MPP), there needs to be a sink where the converter can pump as much power as needed. That is what the battery is for. I don't use it to power things at night. Directly connected to the battery is a 5V regulator that powers the Arduino (drawing a negligible amount) and some USB ports where I can charge my phone and stuff. Since the battery is almost always fully charged, the regulator raises the panel voltage (16 ... 20V open circuit) to match the power dynamically drawn by the USB devices. But it is also able to quickly provide more current if needed or if there are some clouds due to the internal battery. The main problem is: USB devices don't know and don't care that this is a solar-powered system and will draw whatever power they need. This goes against the solar MPP idea of taking whatever power is available from the solar panel.
+ - The second use is to charge a 2s Li-Ion battery that I use in my netbook. The difference to USB phone charging is that it can charge at whatever current is available and actually take advantage of all that MPP stuff.
+ - There is no MPP tracking algorithm implemented yet, it just sets it to 16V and increases that voltage when less power is needed and the battery voltage is high enough. The whole thing isn't that efficient (maybe 80% at best), so those few percent that could be harvested aren't worth it. Also, the way the digital potentiometer is wired, the panel voltage can be adjusted in maybe 0.5V steps. Not precise enough to find the MPP. But like I said, I don't care. That is not the purpose of this unit.
+ - The three analog meters (battery voltage, input current, and panel voltage) are extremely valuable because I can see the state of the system at a glance. Also, they don't produce light, don't flicker (looking at you, e-ink), more like an analog wall clock. For example, when I charge my phone from a USB port, I have to manually make sure the internal battery does not run down. On the "input current" meter, which basically shows "input power" since the input voltage is always around 16V, you can mark compensation points that show how much current you can draw without draining the battery. Basically, if I see that the input power is above value x, which is marked with a dot on the scale, I know that it can keep my phone charged in slow mode. And if the power is above y, I can plug it into the fast charge port. (Tip: If the D+ and D- data wires are connected on a USB port, it signals that the device can draw more than 500mA/2.5W. Not every device respects this, though.)
+
+This is definitely not a setup-and-forget kind of thing. I have to get a feel for what the three meters are telling me about the state (do I need to disconnect the load because there's not enough power? Is it reducing its power consumption (leaving the MPP) and I could actually plug in another USB device?)
+
+But it's a bit forgiving, because energy is simply wasted if too little power is drawn, and the battery can compensate if too much is drawn from the USB ports. So no problem concentrating on other things while it is on.
+
+If anyone actually dares to replicate this, *please* contact me! There's so much more to say.
